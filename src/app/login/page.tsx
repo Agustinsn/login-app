@@ -4,6 +4,8 @@ import RegisterUser from './components/RegisterUser'
 import { registerUser } from './services/registerUser'
 import { isFormComplete } from './utils/isFormComplete'
 import { LoginUser } from './components/LoginUser'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { testAxios } from './services/testAxios'
 
 const initialState = {
     register: false,
@@ -36,8 +38,13 @@ export default function Login() {
         registerUser({ ...state })
     }
 
+    const storeCaptcha = (token: string | null) => {
+        console.log(token)
+        testAxios()
+    }
+
     return (
-        <div className="max-w-lg mx-auto  bg-white dark:bg-gray-800 rounded-lg shadow-md px-8 py-10 flex flex-col items-center">
+        <div className="max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md px-8 py-10 flex flex-col items-center">
             <h1 className="text-xl font-bold text-center text-gray-700 dark:text-gray-200 mb-8">
                 Bienvenido
             </h1>
@@ -46,10 +53,16 @@ export default function Login() {
             ) : (
                 <LoginUser onChange={onChange} />
             )}
+            <div className="mt-4">
+                <ReCAPTCHA
+                    sitekey="6LcZ7QcqAAAAAPuMXSWEMmRtnc4UZbc5Pw6raHLy"
+                    onChange={storeCaptcha}
+                />
+            </div>
             <button
                 form="userForm"
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow-sm"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md shadow-sm mt-2"
                 onClick={onSubmit}
             >
                 {title}
@@ -60,7 +73,7 @@ export default function Login() {
                     {footerText}{' '}
                 </span>
                 <a
-                    className="text-blue-500 hover:text-blue-600"
+                    className="text-blue-500 hover:text-blue-600 cursor-pointer"
                     onClick={toggleBtn}
                 >
                     Ingresar

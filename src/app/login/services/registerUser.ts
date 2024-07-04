@@ -1,3 +1,4 @@
+
 export interface User {
     register?:boolean
     name:string
@@ -9,5 +10,6 @@ export interface User {
 
 export const registerUser = ({...newUser}:User)=>{
     const {name, lastName, userName, email, password} = newUser
+    
     console.log(name, lastName, userName, email, password)
 }
